@@ -1,0 +1,47 @@
+name: macOS Build & Test
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Xcode Version
+        run: sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+
+      - name: Install Dependencies (Swift Package Manager)
+        run: swift package resolve
+
+      - name: Build Application
+        run: |
+          xcodebuild clean build \
+          -project ReqTector.xcodeproj \
+          -scheme ReqTector \
+          -destination 'platform=macOS' \
+          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      - name: Run Unit Tests
+        run: |
+          xcodebuild test \
+          -project ReqTector.xcodeproj \
+          -scheme ReqTector \
+          -destination 'platform=macOS' \
+          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/

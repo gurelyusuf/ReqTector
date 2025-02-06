@@ -1,0 +1,48 @@
+name: macOS Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: swift package resolve
+
+      - name: Build Application (Release Mode)
+        run: |
+          xcodebuild clean archive \
+          -project ReqTector.xcodeproj \
+          -scheme ReqTector \
+          -archivePath build/ReqTector.xcarchive \
+          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      - name: Notarize macOS App
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun altool --notarize-app \
+          --primary-bundle-id "com.yourcompany.reqtector" \
+          --username "$APPLE_ID" \
+          --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+          --file build/ReqTector.xcarchive
+
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reqtector
+          path: build/ReqTector.xcarchive
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/ReqTector.xcarchive
