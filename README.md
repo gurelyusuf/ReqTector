@@ -6,9 +6,10 @@
   <img src="https://img.shields.io/badge/platform-macOS-blue" alt="Platform">
   <img src="https://img.shields.io/badge/macOS-13.5-lightgrey" alt="macOS Version">
   <img src="https://img.shields.io/badge/Swift-5.8-orange.svg" alt="Swift Version">
-  <img src="https://img.shields.io/github/license/gurelyusuf/ReqTector?color=green" alt="License">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
   <img src="https://img.shields.io/github/v/release/gurelyusuf/ReqTector?color=blue&label=Version" alt="Latest Release">
 </p>
+
 
 
 **ReqTector is a **powerful and minimal** macOS network debugging tool designed for developers and engineers to **capture, inspect, and analyze** HTTP/HTTPS requests in real time.**
