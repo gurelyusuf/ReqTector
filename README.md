@@ -60,20 +60,17 @@ A macOS-native UI designed for **efficiency and ease of use**.
 - Enhance **network monitoring** to **packet capture level** (Wireshark-like approach).  
 - Develop as a **VPN proxy** to capture all **network traffic system-wide**.  
 
----
 
 ## Installation
 
 > **Coming Soon** – ReqTector is currently in development. Stay tuned for the official release. 
 
----
 
 ## Contributing
 
 We welcome contributions. If you’d like to report issues, suggest features, or contribute, please check out our upcoming GitHub repository.
 
----
 
 ## License
 
-MIT License. See `LICENSE` for details.
+MIT License. See [LICENSE](LICENSE) for details.
